@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = await getCollection('posts', ({ data }) =>
+	import.meta.env.PROD ? !data.draft : true
+);
+
+posts.sort((a, b) => {
+	const aTime = a.data.datePublished?.getTime() ?? 0;
+	const bTime = b.data.datePublished?.getTime() ?? 0;
+	return bTime - aTime;
+});
+---
+
+<Base title="btsv">
+	<h1>Posts</h1>
+	{
+		posts.length === 0 ? (
+			<p class="empty">No posts yet.</p>
+		) : (
+			posts.map((post) => (
+				<PostCard
+					title={post.data.title}
+					datePublished={post.data.datePublished}
+					description={post.data.description || ''}
+					slug={post.data.slug || post.id}
+					tags={post.data.tags}
+				/>
+			))
+		)
+	}
+</Base>
+
+<style>
+	.empty {
+		color: var(--color-text-muted);
+		margin-top: 1rem;
+	}
+</style>

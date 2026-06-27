@@ -1,0 +1,81 @@
+---
+interface Props {
+	type: 'info' | 'warning' | 'tip';
+}
+
+const { type = 'info' } = Astro.props;
+
+const icons = { info: 'ℹ', warning: '⚠', tip: '💡' };
+const labels = { info: 'Info', warning: 'Warning', tip: 'Tip' };
+---
+
+<aside class={`callout callout-${type}`} role="note">
+	<span class="callout-icon">{icons[type]}</span>
+	<span class="callout-label">{labels[type]}</span>
+	<div class="callout-content">
+		<slot />
+	</div>
+</aside>
+
+<style>
+	.callout {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.5rem 0.75rem;
+		padding: 0.75rem 1rem;
+		margin: 1rem 0;
+		border-radius: 6px;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+	}
+
+	.callout-icon {
+		font-size: 1rem;
+		grid-row: span 2;
+		align-self: start;
+		padding-top: 0.125rem;
+	}
+
+	.callout-label {
+		font-weight: 600;
+		font-size: 0.8125rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.callout-content {
+		grid-column: 2;
+	}
+
+	.callout-info {
+		background: color-mix(in srgb, #3b82f6 8%, transparent);
+		border: 1px solid color-mix(in srgb, #3b82f6 20%, transparent);
+	}
+
+	.callout-warning {
+		background: color-mix(in srgb, #f59e0b 8%, transparent);
+		border: 1px solid color-mix(in srgb, #f59e0b 20%, transparent);
+	}
+
+	.callout-tip {
+		background: color-mix(in srgb, #10b981 8%, transparent);
+		border: 1px solid color-mix(in srgb, #10b981 20%, transparent);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.callout-info {
+			background: color-mix(in srgb, #60a5fa 10%, transparent);
+			border-color: color-mix(in srgb, #60a5fa 25%, transparent);
+		}
+
+		.callout-warning {
+			background: color-mix(in srgb, #fbbf24 10%, transparent);
+			border-color: color-mix(in srgb, #fbbf24 25%, transparent);
+		}
+
+		.callout-tip {
+			background: color-mix(in srgb, #34d399 10%, transparent);
+			border-color: color-mix(in srgb, #34d399 25%, transparent);
+		}
+	}
+</style>
