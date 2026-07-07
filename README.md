@@ -1,5 +1,4 @@
 [![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-1389FD)](https://stackblitz.com/fork/github/btsv-space/btsv-template-astro?title=btsv-template-astro)
-[![Open in Bolt.new](https://img.shields.io/badge/Open%20in-Bolt.new-0D0D0D)](https://bolt.new/~/github.com/btsv-space/btsv-template-astro)
 
 # btsv-template-astro
 
