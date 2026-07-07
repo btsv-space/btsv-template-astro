@@ -9,7 +9,7 @@ markdown+ editor that publishes to a static site via git.
 
 1. **Use this template** (not Fork) — click the green "Use this template" button at the
    top of this repo. Choose private visibility if you want a private blog.
-2. **Clone your new repo** and run `npm install`.
+2. **Clone your new repo** and run `pnpm install`.
 3. **Write posts** in `src/content/posts/`. Each post is an `.mdx` file.
 4. **Deploy** — connect your repo to any static host (Netlify, Cloudflare Pages, Vercel).
    They all auto-detect Astro. No config needed.
@@ -108,7 +108,7 @@ src/
 
 ## Deployment
 
-Run `npm run build` to produce a static site in `dist/`. Deploy the `dist/` folder
+Run `pnpm build` to produce a static site in `dist/`. Deploy the `dist/` folder
 to any static host:
 
 - **Netlify**: Import from Git — auto-detects Astro
@@ -123,6 +123,6 @@ automatically and sets the correct build command (`astro build`) and output dire
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Local dev server at `localhost:4321` |
-| `npm run build` | Production build → `dist/` |
-| `npm run preview` | Preview production build locally |
+| `pnpm dev` | Local dev server at `localhost:4321` |
+| `pnpm build` | Production build → `dist/` |
+| `pnpm preview` | Preview production build locally |
