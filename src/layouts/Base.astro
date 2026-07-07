@@ -6,8 +6,8 @@ const { title, description } = Astro.props;
 const contentPages = import.meta.glob('../content/posts/*.mdx', { eager: true });
 const navPages = Object.entries(contentPages)
 	.map(([path, mod]) => {
-		const slug = path.split('/').pop()?.replace('.mdx', '');
 		const fm = (mod as any).frontmatter;
+		const slug = fm?.slug || path.split('/').pop()?.replace('.mdx', '');
 		return { slug, title: fm?.title || slug || '', page: fm?.page };
 	})
 	.filter((p) => p.page);
