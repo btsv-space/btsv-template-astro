@@ -1,11 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import PostCard from '../components/PostCard.astro';
+import PostArticle from '../components/PostArticle.astro';
 
-const posts = await getCollection('posts', ({ data }) =>
-	import.meta.env.PROD ? !data.draft : true
-);
+const posts = await getCollection('posts', ({ data }) => {
+	if (data.page) return false;
+	return import.meta.env.PROD ? !data.draft : true;
+});
 
 posts.sort((a, b) => {
 	const aTime = a.data.datePublished?.getTime() ?? 0;
@@ -15,27 +16,19 @@ posts.sort((a, b) => {
 ---
 
 <Base title="btsv">
-	<h1>Posts</h1>
 	{
 		posts.length === 0 ? (
-			<p class="empty">No posts yet.</p>
+			<p class="text-muted-foreground">No posts yet.</p>
 		) : (
-			posts.map((post) => (
-				<PostCard
-					title={post.data.title}
-					datePublished={post.data.datePublished}
-					description={post.data.description || ''}
-					slug={post.data.slug || post.id}
-					tags={post.data.tags}
-				/>
-			))
+			<div class="flex flex-col gap-12">
+				{posts.map((post) => (
+					<PostArticle post={post} titleAsLink={true} lineClamp={7}>
+						<a href={`/${post.data.slug || post.id}`} class="btn-secondary rounded-full text-sm mt-6 inline-flex no-underline">
+							Read more →
+						</a>
+					</PostArticle>
+				))}
+			</div>
 		)
 	}
 </Base>
-
-<style>
-	.empty {
-		color: var(--color-text-muted);
-		margin-top: 1rem;
-	}
-</style>

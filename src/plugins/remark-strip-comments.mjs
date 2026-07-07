@@ -17,14 +17,16 @@ export default function remarkStripComments() {
 			if (node.type === 'paragraph' && node.children.length === 1) {
 				const child = node.children[0];
 				if (child.type === 'text') {
-					if (!stripping && child.value.startsWith('@@')) {
-						stripping = true;
-						if (child.value.trim() === '@@@') continue;
+					const value = child.value;
+					const containsEnd = value.includes('\n@@@') || value.endsWith('@@@');
+
+					if (!stripping && value.startsWith('@@')) {
+						stripping = !containsEnd;
 						continue;
 					}
 
 					if (stripping) {
-						if (child.value.trim() === '@@@') {
+						if (containsEnd) {
 							stripping = false;
 						}
 						continue;

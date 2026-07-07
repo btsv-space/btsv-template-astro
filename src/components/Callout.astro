@@ -5,46 +5,24 @@ interface Props {
 
 const { type = 'info' } = Astro.props;
 
-const icons = { info: 'ℹ', warning: '⚠', tip: '💡' };
+const icons = { info: 'ℹ️', warning: '⚠️', tip: '💡' };
 const labels = { info: 'Info', warning: 'Warning', tip: 'Tip' };
 ---
 
-<aside class={`callout callout-${type}`} role="note">
-	<span class="callout-icon">{icons[type]}</span>
-	<span class="callout-label">{labels[type]}</span>
-	<div class="callout-content">
+<aside class={`callout callout-${type} grid grid-cols-[auto_1fr] gap-y-1 gap-x-3 px-4 py-3 my-4 rounded-lg text-[0.9375rem] leading-relaxed`} role="note">
+	<span class="text-base self-start pt-0.5">{icons[type]}</span>
+	<span class="font-semibold text-[0.8125rem] uppercase tracking-wider col-start-2 self-center">{labels[type]}</span>
+	<div class="col-start-2 callout-content">
 		<slot />
 	</div>
 </aside>
 
 <style>
-	.callout {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 0.5rem 0.75rem;
-		padding: 0.75rem 1rem;
-		margin: 1rem 0;
-		border-radius: 6px;
-		font-size: 0.9375rem;
-		line-height: 1.6;
+	.callout-content > :first-child {
+		margin-top: 0;
 	}
-
-	.callout-icon {
-		font-size: 1rem;
-		grid-row: span 2;
-		align-self: start;
-		padding-top: 0.125rem;
-	}
-
-	.callout-label {
-		font-weight: 600;
-		font-size: 0.8125rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.callout-content {
-		grid-column: 2;
+	.callout-content > :last-child {
+		margin-bottom: 0;
 	}
 
 	.callout-info {

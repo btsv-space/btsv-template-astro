@@ -17,5 +17,9 @@
     "@astrojs/rss": "^4.0.18",
     "astro": "^6.4.4",
     "unist-util-visit": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.1",
+    "tailwindcss": "^4.3.1"
   }
 }

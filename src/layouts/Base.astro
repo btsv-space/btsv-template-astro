@@ -1,27 +1,53 @@
 ---
+import '../styles/global.css';
+
 const { title, description } = Astro.props;
+
+const contentPages = import.meta.glob('../content/posts/*.mdx', { eager: true });
+const navPages = Object.entries(contentPages)
+	.map(([path, mod]) => {
+		const slug = path.split('/').pop()?.replace('.mdx', '');
+		const fm = (mod as any).frontmatter;
+		return { slug, title: fm?.title || slug || '', page: fm?.page };
+	})
+	.filter((p) => p.page);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
+		<script>
+			(function () {
+				var m = window.matchMedia("(prefers-color-scheme: dark)");
+				if (m.matches) document.documentElement.classList.add("dark");
+				m.addEventListener("change", function (e) {
+					document.documentElement.classList.toggle("dark", e.matches);
+				});
+			})();
+		</script>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
 		<title>{title ? `${title} — btsv` : 'btsv'}</title>
 		<meta name="description" content={description || ''} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	</head>
 	<body>
-		<header>
-			<nav>
-				<a href="/"><strong>btsv</strong></a>
+		<header class="flex items-center justify-between max-w-4xl mx-auto px-4 py-4">
+			<a href="/" class="text-lg font-semibold no-underline text-foreground hover:opacity-80">btsv</a>
+			<nav class="flex items-center gap-4 text-sm">
+				{navPages.map((page) => (
+					<a href={`/${page.slug}`} class="text-muted-foreground no-underline hover:text-foreground">{page.title}</a>
+				))}
 			</nav>
 		</header>
-		<main>
+		<main class="max-w-4xl mx-auto px-4 py-6">
 			<slot />
 		</main>
-		<footer>
-			<p>Powered by <a href="https://github.com/btsv/btsv-template-astro">btsv</a></p>
+		<footer class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
+			<p>・・・</p>
+			<p>Powered by <a href="https://github.com/btsv-space/btsv-template-astro" class="text-foreground underline-offset-2">btsv</a></p>
 		</footer>
 	</body>
 </html>
