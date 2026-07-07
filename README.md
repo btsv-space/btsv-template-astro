@@ -95,7 +95,7 @@ src/
 ├── layouts/
 │   └── Base.astro           HTML shell
 ├── components/
-│   ├── PostCard.astro       Post preview card
+│   ├── PostArticle.astro       Post preview card
 │   ├── Callout.astro        Info / warning / tip
 │   └── Figure.astro         Captioned image
 ├── plugins/
