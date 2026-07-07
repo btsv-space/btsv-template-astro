@@ -1,4 +1,4 @@
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/btsv-space/btsv-template-astro?title=btsv)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/btsv-space/btsv-template-astro?title=btsv-template-astro)
 
 # btsv-template-astro
 
