@@ -1,3 +1,5 @@
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/btsv-space/btsv-template-astro?title=btsv)
+
 # btsv-template-astro
 
 Astro blog template for [btsv](https://github.com/btsv/btsv) — a
@@ -49,7 +51,7 @@ updated: 2025-03-01        # optional, last modified date
 ```
 
 The schema is enforced at build time by Astro content collections
-(`src/content/config.ts`).
+(`src/content.config.ts`).
 
 ## Markdown+
 
@@ -86,7 +88,7 @@ These are stripped by a remark plugin during the build — they never reach the 
 ```
 src/
 ├── content/
-│   ├── config.ts            Frontmatter schema (the contract)
+│   ├── content.config.ts    Frontmatter schema (the contract)
 │   └── posts/               Your posts go here (*.mdx)
 ├── pages/
 │   ├── index.astro          Post listing
