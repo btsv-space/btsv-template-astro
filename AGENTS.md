@@ -31,6 +31,7 @@ Safe to help with cosmetic and styling changes:
 - `src/pages/*.astro` — page-level markup and styling.
 - `src/site.config.ts` — site name, description, footer text, URL, favicon, icon colors/case/font.
 - `scripts/generate-favicon.ts` — auto-generates favicon.svg from site config if missing.
+  - ⚠️ Font-family strings must not contain double quotes — they break the SVG XML parser.
 - `public/favicon.svg` — favicon SVG (can be replaced or deleted to trigger regeneration).
 
 ## If a styling change needs a data change
