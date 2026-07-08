@@ -10,7 +10,7 @@ Hard rules. Never under any circumstances:
 - `astro.config.mjs` — framework configuration.
 - `tsconfig.json` — TypeScript configuration.
 - `content.config.ts` — content collection configuration.
-- `package.json` scripts — dev/build/preview commands.
+- `package.json` scripts — dev/build/preview commands and their favicon generation prefixes.
 - `src/plugins/` — remark/markdown plugins.
 
 ## Should Avoid
@@ -29,7 +29,9 @@ Safe to help with cosmetic and styling changes:
 - `src/layouts/Base.astro` — HTML shell, header, footer, nav, layout markup.
 - `src/components/*.astro` — component markup and Tailwind classes.
 - `src/pages/*.astro` — page-level markup and styling.
-- `src/site.config.ts` — site name, description, footer text, URL, favicon.
+- `src/site.config.ts` — site name, description, footer text, URL, favicon, icon colors/case/font.
+- `scripts/generate-favicon.ts` — auto-generates favicon.svg from site config if missing.
+- `public/favicon.svg` — favicon SVG (can be replaced or deleted to trigger regeneration).
 
 ## If a styling change needs a data change
 
