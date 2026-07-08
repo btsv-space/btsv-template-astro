@@ -1,13 +1,14 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { site } from '../site.config';
 
 export async function GET(context) {
 	const posts = await getCollection('posts', ({ data }) => !data.draft && !data.page);
 
 	return rss({
-		title: 'btsv',
-		description: 'A blog powered by btsv',
-		site: context.site || 'https://example.com',
+		title: site.name,
+		description: site.description || `A blog powered by ${site.name}`,
+		site: context.site || site.url,
 		items: posts
 			.sort((a, b) => {
 				const aTime = a.data.datePublished?.getTime() ?? 0;
@@ -20,6 +21,6 @@ export async function GET(context) {
 				pubDate: post.data.datePublished ?? new Date(),
 				link: `/${post.data.slug || post.id}/`
 			})),
-		customData: '<language>en</language>'
+		customData: `<language>${site.lang}</language>`
 	});
 }

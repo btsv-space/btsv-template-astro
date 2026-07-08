@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { site } from '../site.config';
 
 const { title, description } = Astro.props;
 
@@ -14,7 +15,7 @@ const navPages = Object.entries(contentPages)
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={site.lang}>
 	<head>
 		<script>
 			(function () {
@@ -29,13 +30,13 @@ const navPages = Object.entries(contentPages)
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7" />
 		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
-		<title>{title ? `${title} — btsv` : 'btsv'}</title>
-		<meta name="description" content={description || ''} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title && title !== site.name ? `${title} — ${site.name}` : site.name}</title>
+		<meta name="description" content={description || site.description} />
+		<link rel="icon" type="image/svg+xml" href={site.faviconSvg} />
 	</head>
 	<body>
 		<header class="flex items-center justify-between max-w-4xl mx-auto px-4 py-4">
-			<a href="/" class="text-lg font-semibold no-underline text-foreground hover:opacity-80">btsv</a>
+			<a href="/" class="text-lg font-semibold no-underline text-foreground hover:opacity-80">{site.name}</a>
 			<nav class="flex items-center gap-4 text-sm">
 				{navPages.map((page) => (
 					<a href={`/${page.slug}`} class="text-muted-foreground no-underline hover:text-foreground">{page.title}</a>
@@ -47,7 +48,7 @@ const navPages = Object.entries(contentPages)
 		</main>
 		<footer class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
 			<p>・・・</p>
-			<p>Powered by <a href="https://github.com/btsv-space/btsv-template-astro" class="text-foreground underline-offset-2">btsv</a></p>
+			<p set:html={site.footer} />
 		</footer>
 	</body>
 </html>

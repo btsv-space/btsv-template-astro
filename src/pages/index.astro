@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PostArticle from '../components/PostArticle.astro';
+import { site } from '../site.config';
 
 const posts = await getCollection('posts', ({ data }) => {
 	if (data.page) return false;
@@ -15,7 +16,7 @@ posts.sort((a, b) => {
 });
 ---
 
-<Base title="btsv">
+<Base title={site.name}>
 	{
 		posts.length === 0 ? (
 			<p class="text-muted-foreground">No posts yet.</p>

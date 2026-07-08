@@ -10,8 +10,10 @@ markdown+ editor that publishes to a static site via git.
 1. **Use this template** (not Fork) — click the green "Use this template" button at the
    top of this repo. Choose private visibility if you want a private blog.
 2. **Clone your new repo** and run `pnpm install`.
-3. **Write posts** in `src/content/posts/`. Each post is an `.mdx` file.
-4. **Deploy** — connect your repo to any static host (Netlify, Cloudflare Pages, Vercel).
+3. **Customize your site** — edit `src/site.config.ts` to set your site name,
+   description, URL, and other metadata.
+4. **Write posts** in `src/content/posts/`. Each post is an `.mdx` file.
+5. **Deploy** — connect your repo to any static host (Netlify, Cloudflare Pages, Vercel).
    They all auto-detect Astro. No config needed.
 
 ### Merging upstream changes
@@ -87,6 +89,7 @@ These are stripped by a remark plugin during the build — they never reach the 
 
 ```
 src/
+├── site.config.ts            Site identity (name, description, URL, etc.)
 ├── content/
 │   ├── content.config.ts    Frontmatter schema (the contract)
 │   └── posts/               Your posts go here (*.mdx)
