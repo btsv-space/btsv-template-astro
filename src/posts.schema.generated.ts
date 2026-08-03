@@ -39,7 +39,7 @@ export const postsSchema = z
     id: z
       .string()
       .describe(
-        "Internal post identifier (timestamp in YYYYMMDD-HHMMSSmm format). Auto-generated, do not edit.",
+        "Internal post identifier (timestamp in YYYYMMDD-HHMMSSmm-<rand> format). Auto-generated, do not edit.",
       )
       .optional(),
     slug: z
