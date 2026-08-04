@@ -13,7 +13,7 @@ markdown+ editor that publishes to a static site via git.
 3. **Customize your site** — edit `src/site.config.ts` to set your site name,
    description, URL, favicon, and other metadata. Delete `public/favicon.svg`
    to have one auto-generated from your site name on the next build.
-4. **Write posts** in `src/content/posts/`. Each post is an `.mdx` file.
+4. **Write posts** in `src/content/posts/`. Each post is a `.md` file.
 5. **Deploy** — connect your repo to any static host (Netlify, Cloudflare Pages, Vercel).
    They all auto-detect Astro. No config needed.
 
@@ -58,20 +58,29 @@ The schema is enforced at build time by Astro content collections
 
 ## Markdown+
 
-Posts use **GitHub-flavored Markdown** via MDX, plus custom components:
+Posts use **GitHub-flavored Markdown** (`.md`) compiled by Sätteri (Astro v7's
+native markdown engine), plus custom directives:
 
 ### Callouts
 
-```mdx
-<Callout type="info">Information callout</Callout>
-<Callout type="warning">Warning callout</Callout>
-<Callout type="tip">Tip callout</Callout>
+```md
+:::callout{type=info}
+Information callout
+:::
+
+:::callout{type=warning}
+Warning callout
+:::
+
+:::callout{type=tip}
+Tip callout
+:::
 ```
 
 ### Figures
 
-```mdx
-<Figure src="/image.png" alt="Description" caption="Optional caption" />
+```md
+::figure{src="/image.png" alt="Description" caption="Optional caption"}
 ```
 
 ### Editor-only comments
@@ -114,9 +123,11 @@ src/
 ├── site.config.ts            Site identity (name, description, URL, favicon, etc.)
 ├── content/
 │   ├── content.config.ts    Frontmatter schema (the contract)
-│   └── posts/               Your posts go here (*.mdx)
+│   └── posts/               Your posts go here (*.md)
 ├── pages/
-│   ├── index.astro          Post listing
+│   ├── index.astro          Post listing (first 10 posts)
+│   ├── page/[page].astro    Paginated archive pages (page 2+)
+│   ├── tags/[tag].astro     Per-tag listing pages
 │   ├── [...slug].astro      Dynamic post rendering
 │   ├── favicon.ico.ts        Redirects /favicon.ico → /favicon.svg
 │   └── rss.xml.js           RSS feed
@@ -127,7 +138,8 @@ src/
 │   ├── Callout.astro        Info / warning / tip
 │   └── Figure.astro         Captioned image
 ├── plugins/
-│   └── strip-comments.mjs          Sätteri MDAST plugin; strips @@ ... @@@ blocks
+│   ├── strip-comments.mjs          Sätteri MDAST plugin; strips @@ ... @@@ blocks
+│   └── directives.mjs             Sätteri MDAST plugin; renders :::callout / ::figure
 └── styles/
     └── global.css           Base styles (inlined in Base.astro)
 ```

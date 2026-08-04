@@ -1,6 +1,6 @@
 # AGENTS.md
 
-A static Astro blog template backed by MDX content collections.
+A static Astro blog template backed by Markdown content collections.
 
 ## Must Not Edit
 
@@ -11,7 +11,7 @@ Hard rules. Never under any circumstances:
 - `tsconfig.json` — TypeScript configuration.
 - `content.config.ts` — content collection configuration.
 - `package.json` scripts — dev/build/preview commands and their favicon generation prefixes.
-- `src/plugins/` — Sätteri MDAST plugins.
+- `src/plugins/` — Sätteri MDAST plugins (strip-comments, directives).
 
 ## Should Avoid
 
