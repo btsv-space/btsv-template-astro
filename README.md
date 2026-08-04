@@ -84,7 +84,7 @@ Lines starting with `@@` are stripped from the published page:
 @@@
 ```
 
-These are stripped by a remark plugin during the build — they never reach the HTML output.
+These are stripped by a Sätteri plugin during the build — they never reach the HTML output.
 
 ## Favicon
 
@@ -127,7 +127,7 @@ src/
 │   ├── Callout.astro        Info / warning / tip
 │   └── Figure.astro         Captioned image
 ├── plugins/
-│   └── remark-strip-comments.mjs   Strips @@ ... @@@ blocks
+│   └── strip-comments.mjs          Sätteri MDAST plugin; strips @@ ... @@@ blocks
 └── styles/
     └── global.css           Base styles (inlined in Base.astro)
 ```

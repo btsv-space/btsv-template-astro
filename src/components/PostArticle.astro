@@ -1,19 +1,16 @@
 ---
 import { render } from 'astro:content';
-import Callout from './Callout.astro';
-import Figure from './Figure.astro';
 
 interface Props {
 	post: any;
 	titleAsLink?: boolean;
-	lineClamp?: number;
+	clamp?: boolean;
 }
 
-const { post, titleAsLink = false, lineClamp } = Astro.props;
+const { post, titleAsLink = false, clamp = false } = Astro.props;
 const { Content } = await render(post);
 const published = post.data.datePublished;
 const slug = post.data.slug || post.id;
-const clampClass = lineClamp ? 'line-clamp-[var(--lines)]' : '';
 ---
 
 <article class="max-w-2xl mx-auto w-full">
@@ -48,8 +45,8 @@ const clampClass = lineClamp ? 'line-clamp-[var(--lines)]' : '';
 		)}
 	</header>
 
-	<div class={`prose ${clampClass}`} style={lineClamp ? `--lines: ${lineClamp}` : undefined}>
-		<Content components={{ Callout, Figure }} />
+	<div class={`prose${clamp ? ' line-clamp-[7]' : ''}`}>
+		<Content />
 	</div>
 
 	<slot />

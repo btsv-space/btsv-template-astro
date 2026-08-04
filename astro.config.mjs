@@ -1,18 +1,18 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import { unified } from '@astrojs/markdown-remark';
+import { satteri } from '@astrojs/markdown-satteri';
 import tailwindcss from '@tailwindcss/vite';
-import remarkStripComments from './src/plugins/remark-strip-comments.mjs';
+import { stripComments } from './src/plugins/strip-comments.mjs';
+import { directives } from './src/plugins/directives.mjs';
 
 export default defineConfig({
-	integrations: [mdx()],
 	vite: {
 		plugins: [tailwindcss()]
 	},
 	markdown: {
-		processor: unified({
-			remarkPlugins: [remarkStripComments]
+		processor: satteri({
+			mdastPlugins: [stripComments, directives],
+			features: { directive: true }
 		}),
 		syntaxHighlight: 'shiki',
 		shikiConfig: {

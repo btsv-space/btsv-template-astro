@@ -11,7 +11,7 @@ Hard rules. Never under any circumstances:
 - `tsconfig.json` — TypeScript configuration.
 - `content.config.ts` — content collection configuration.
 - `package.json` scripts — dev/build/preview commands and their favicon generation prefixes.
-- `src/plugins/` — remark/markdown plugins.
+- `src/plugins/` — Sätteri MDAST plugins.
 
 ## Should Avoid
 
