@@ -1,17 +1,14 @@
 ---
 import '../styles/global.css';
 import { site } from '../site.config';
+import { getCollection } from 'astro:content';
 
 const { title, description } = Astro.props;
 
-const contentPages = import.meta.glob('../content/posts/*.mdx', { eager: true });
-const navPages = Object.entries(contentPages)
-	.map(([path, mod]) => {
-		const fm = (mod as any).frontmatter;
-		const slug = fm?.slug || path.split('/').pop()?.replace('.mdx', '');
-		return { slug, title: fm?.title || slug || '', page: fm?.page };
-	})
-	.filter((p) => p.page);
+const navPages = (await getCollection('posts', ({ data }) => data.page)).map((p) => ({
+	slug: p.data.slug || p.id,
+	title: p.data.title
+}));
 ---
 
 <!doctype html>
