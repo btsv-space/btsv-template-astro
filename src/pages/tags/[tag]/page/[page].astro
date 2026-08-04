@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import PostArticle from '../../../../components/PostArticle.astro';
+import { site } from '../../../../site.config';
+import { PAGE_SIZE } from '../../../../constants';
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection('posts', ({ data }) => {
+		if (data.page) return false;
+		return import.meta.env.PROD ? !data.draft : true;
+	});
+
+	allPosts.sort((a, b) => {
+		const aTime = a.data.datePublished?.getTime() ?? 0;
+		const bTime = b.data.datePublished?.getTime() ?? 0;
+		return bTime - aTime;
+	});
+
+	const tagMap = new Map<string, typeof allPosts>();
+	for (const post of allPosts) {
+		for (const tag of post.data.tags) {
+			if (!tagMap.has(tag)) tagMap.set(tag, []);
+			tagMap.get(tag)!.push(post);
+		}
+	}
+
+	const paths = [];
+	for (const [tag, posts] of tagMap) {
+		const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+		for (let i = 1; i < totalPages; i++) {
+			paths.push({
+				params: { tag, page: String(i + 1) },
+				props: {
+					posts: posts.slice(i * PAGE_SIZE, (i + 1) * PAGE_SIZE),
+					tag,
+					currentPage: i + 1,
+					totalPages
+				}
+			});
+		}
+	}
+	return paths;
+}
+
+const { posts, tag, currentPage, totalPages } = Astro.props;
+const prevPage = currentPage > 2 ? `/tags/${tag}/page/${currentPage - 1}/` : `/tags/${tag}/`;
+const nextPage = currentPage < totalPages ? `/tags/${tag}/page/${currentPage + 1}/` : null;
+---
+
+<Base title={`#${tag} — Page ${currentPage} — ${site.name}`} description={`Posts tagged ${tag}`}>
+	<div class="flex flex-col gap-12">
+		{posts.map((post) => (
+			<PostArticle post={post} titleAsLink={true} lineClamp={7}>
+				<a href={`/${post.data.slug || post.id}`} class="btn-secondary rounded-full text-sm mt-6 inline-flex no-underline">
+					Read more →
+				</a>
+			</PostArticle>
+		))}
+	</div>
+	<nav class="flex justify-between items-center mt-12 text-sm">
+		<a href={prevPage} class="btn-secondary rounded-full px-4 py-2 no-underline">← Newer</a>
+		<span class="text-muted-foreground">Page {currentPage} of {totalPages}</span>
+		{nextPage ? (
+			<a href={nextPage} class="btn-secondary rounded-full px-4 py-2 no-underline">Older →</a>
+		) : (
+			<span class="btn-secondary rounded-full px-4 py-2 opacity-50">Older →</span>
+		)}
+	</nav>
+</Base>
