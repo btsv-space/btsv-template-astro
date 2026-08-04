@@ -116,7 +116,9 @@ src/
 │   ├── content.config.ts    Frontmatter schema (the contract)
 │   └── posts/               Your posts go here (*.mdx)
 ├── pages/
-│   ├── index.astro          Post listing
+│   ├── index.astro          Post listing (first 10 posts)
+│   ├── page/[page].astro    Paginated archive pages (page 2+)
+│   ├── tags/[tag].astro     Per-tag listing pages
 │   ├── [...slug].astro      Dynamic post rendering
 │   ├── favicon.ico.ts        Redirects /favicon.ico → /favicon.svg
 │   └── rss.xml.js           RSS feed

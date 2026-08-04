@@ -3,17 +3,22 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PostArticle from '../components/PostArticle.astro';
 import { site } from '../site.config';
+import { PAGE_SIZE } from '../constants';
 
-const posts = await getCollection('posts', ({ data }) => {
+const allPosts = await getCollection('posts', ({ data }) => {
 	if (data.page) return false;
 	return import.meta.env.PROD ? !data.draft : true;
 });
 
-posts.sort((a, b) => {
+allPosts.sort((a, b) => {
 	const aTime = a.data.datePublished?.getTime() ?? 0;
 	const bTime = b.data.datePublished?.getTime() ?? 0;
 	return bTime - aTime;
 });
+
+const posts = allPosts.slice(0, PAGE_SIZE);
+const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
+const hasMore = totalPages > 1;
 ---
 
 <Base title={site.name}>
@@ -32,4 +37,9 @@ posts.sort((a, b) => {
 			</div>
 		)
 	}
+	{hasMore && (
+		<nav class="flex justify-center gap-4 mt-12 text-sm">
+			<a href="/page/2/" class="btn-secondary rounded-full px-4 py-2 no-underline">Older posts →</a>
+		</nav>
+	)}
 </Base>
